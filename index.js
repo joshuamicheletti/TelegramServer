@@ -48,7 +48,7 @@ app.post("/telegram", (req, resp) => {
   user = req.body.message.from.first_name;
   text = req.body.message.text;
 
-  totalMessage = totalMessage + user + ": " + text + "\\n\\n";
+  totalMessage = totalMessage + user + ": " + text + "\r";
 
   resp.status(200).send("Messaggio in arrivo!").end();
   testCounter++;
