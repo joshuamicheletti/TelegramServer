@@ -14,6 +14,10 @@
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
 const app = express();
+
+// formattazione richieste in json
+app.use(express.json());
+
 const got = require("got");
 
 // make all the files in 'public' available
@@ -31,28 +35,20 @@ app.get("/info", async (req, resp) => {
   resp.sendStatus(200);
 });
 
-app.get("/set", async (req, resp) => {
-  const webhook = await got("https://api.telegram.org/bot1500961059:AAGKH7a-RHTiBW-TlpbeClXC4PKeal61das/setWebhook?url=https%3A%2F%2Fleaf-coral-newt.glitch.me%2Ftelegram");
-  console.log(webhook.body);
-  resp.sendStatus(200);
-});
-
-app.get("/test", async (req, resp) => {
-  const webhookStatus = await got("https://api.telegram.org/bot1500961059:AAGKH7a-RHTiBW-TlpbeClXC4PKeal61das/getWebhookInfo");
-  console.log(webhookStatus.body);
-  resp.sendStatus(200);
-});
-
 var testCounter = 0;
+
+var requestBody;
 
 app.post("/telegram", (req, resp) => {
   console.log("Messaggio in arrivo!");
+  requestBody = req.body;
   resp.status(200).send("Messaggio in arrivo!").end();
   testCounter++;
 });
 
 app.get("/telegramTest", (req, resp) => {
-  resp.status(200).send(testCounter.toString()).end();
+  // resp.status(200).send(testCounter.toString()).end();
+  resp.status(200).send(JSON.stringify(requestBody)).end();
 });
 
 app.get("/", (req, resp) => {
