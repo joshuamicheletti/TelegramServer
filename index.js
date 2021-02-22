@@ -37,18 +37,28 @@ app.get("/info", async (req, resp) => {
 
 var testCounter = 0;
 
+var user;
+var text;
 var requestBody;
+var totalMessage = "";
 
 app.post("/telegram", (req, resp) => {
   console.log("Messaggio in arrivo!");
   requestBody = req.body;
+  user = req.body.message.from.first_name + " " + req.body.message.from.last_name;
+  text = req.body.message.text;
+
+  totalMessage = totalMessage + user + text + " ";
+
   resp.status(200).send("Messaggio in arrivo!").end();
   testCounter++;
 });
 
 app.get("/telegramTest", (req, resp) => {
   // resp.status(200).send(testCounter.toString()).end();
-  resp.status(200).send(JSON.stringify(requestBody)).end();
+  // resp.status(200).send(JSON.stringify(requestBody)).end();
+  resp.status(200).send(totalMessage).end();
+  // requestBody.message.text;
 });
 
 app.get("/", (req, resp) => {
