@@ -37,8 +37,8 @@ app.get("/info", async (req, resp) => {
 
 var testCounter = 0;
 
-var user;
-var text;
+var user = "";
+var text = "";
 var requestBody;
 var totalMessage = "";
 
@@ -48,7 +48,7 @@ app.post("/telegram", (req, resp) => {
   user = req.body.message.from.first_name + " " + req.body.message.from.last_name;
   text = req.body.message.text;
 
-  totalMessage = totalMessage + user + text + " ";
+  totalMessage = totalMessage + user + " " + text + "\n";
 
   resp.status(200).send("Messaggio in arrivo!").end();
   testCounter++;
